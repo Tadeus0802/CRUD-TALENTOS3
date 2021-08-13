@@ -1,21 +1,22 @@
-# CRUD-TALENTOS3
+# Crud-Talentos
+Repositorio de la API
 
-Faltan los modulos de node (se pueden usar los de las versiones anteriores)
-Objetivos:
-[Yo como:]
+## Faltan los modulos de node (se pueden usar los de las versiones anteriores)
+
+## Objetivos:
+
+### [Yo como:]
 Administrador
-
-[Quiero:]
+### [Quiero:]
 poder ingresar, modificar y eliminar preguntas en una encuesta y categorizarlas en niveles configurables (tipo, subtipo).
-
-[Para:]
+### [Para:]
 Que luego puedan incorporarse a los cuestionarios y ejecutarlos en formato de Encuesta
 
-[Yo como:]
+---
+
+### [Yo como:]
 Administrador
-
-[Quiero:]
+### [Quiero:]
 poder ingresar, modificar y eliminar cuestionarios que agrupen preguntas según un criterio.
-
-[Para:]
+### [Para:]
 Que se puedan disponer de encuestas basadas en esos cuestionarios.
