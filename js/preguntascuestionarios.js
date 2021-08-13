@@ -12,7 +12,7 @@ $(document).ready(function () {
     idcuestionarios =parseInt(sessionStorage.getItem("idcuestionarios"),10);
     let titulo=sessionStorage.getItem("titulo");
     
-    document.getElementById("titulo").innerHTML=`Cuestionario N°: ${idcuestionarios} <br> `;
+    //document.getElementById("titulo").innerHTML=`Cuestionario N°: ${idcuestionarios} <br> `;
     document.getElementById("subtitulo").innerHTML=`Título: ${titulo}`;
 
     //MOSTRAR PREGUNTAS EN EL MODAL DE ASIGNAR PREGUNTAS
