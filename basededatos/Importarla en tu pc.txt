@@ -1,0 +1,4 @@
+Se debera crear una base de datos http://localhost/phpmyadmin/ con la aplicacion "Xampp" con el minimo
+de los modulos "Apache" y "MySQL" iniciado. El Nombre de la misma tendra que ser "ct".
+Seleccionar la base de datos. Hay un boton "importar", dar click en el y click en "Seleccionar archivo" y seleccionar el archivo "ct.sql".
+Dar click en "continuar" en la parte inferior de la interfaz

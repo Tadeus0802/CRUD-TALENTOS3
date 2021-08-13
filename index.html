@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Iniciar Sesion</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, red, blue);
+    }
+
+     .container #login-row #login-columns #login-box {
+      margin-top: 70px;
+      max-width: 600px;
+      height: 300px;
+      box-shadow: 5px 5px 5px black;
+      border-radius: 5px;
+    }
+
+    #login {
+      margin-top: 40px;
+    }
+  </style>
+  <link rel="shortcut icon" type="image/png" href="html/favicon.png"/>
+</head>
+
+<body>
+  <div class="container">
+    <div id="login-row" class="row justify-content-center align-items-center">
+      <div id="login-columns" class="col-md-6">
+        <div id="login-box" class="col-md-12 bg-light text-dark p-5">
+          <div id="root">
+            
+              <h1 id="form-text" class="text-center display-4">Iniciar sesion</h1>
+              <div class="form-group text-center">
+                <button id="login" class="btn btn-primary">
+                  <i class="fab fa-google"> Iniciar sesion con Google</i>
+                </button>
+              </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-auth.js"></script>
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyByQOsexam55TQpcPqm80j0gjuI_CmhVGo",
+      authDomain: "crudtalentos-747cc.firebaseapp.com",
+      projectId: "crudtalentos-747cc",
+      storageBucket: "crudtalentos-747cc.appspot.com",
+      messagingSenderId: "247365779777",
+      appId: "1:247365779777:web:620df1436fe38c9099a1c0",
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+  </script>
+  <script src="../js/login.js"></script>
+  <script src="../js/cache.js"></script>
+</body>
+
+</html>

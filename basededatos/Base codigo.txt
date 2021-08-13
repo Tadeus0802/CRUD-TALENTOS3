@@ -1,0 +1,23 @@
+CREATE TABLE cuestionarios
+(	idcuestionarios INT NOT NULL,
+	fechaCreacion varchar(50) NOT NULL,
+	usuarioCreador varchar(50) NOT NULL,
+	descripcion varchar(255) NOT NULL,
+	estado varchar(50) NOT NULL,
+ 	PRIMARY KEY (IDCUESTIONARIOS)
+  	  )ENGINE=INNODB;
+
+CREATE TABLE preguntas
+(	idpreguntas INT NOT NULL,
+	descripcion varchar(255) NOT NULL UNIQUE,
+	estado varchar(50) NOT NULL,
+ 	PRIMARY KEY (IDPREGUNTAS)
+    	)ENGINE=INNODB;
+
+CREATE TABLE enlaces
+(	idcuestionarios INT NOT NULL,
+	idpreguntas INT NOT NULL,
+ 	FOREIGN KEY (idcuestionarios) REFERENCES cuestionarios(idcuestionarios),
+ 	FOREIGN KEY (idpreguntas) REFERENCES preguntas(idpreguntas),
+	unique(idcuestionarios,idpreguntas)
+    	)ENGINE=INNODB;

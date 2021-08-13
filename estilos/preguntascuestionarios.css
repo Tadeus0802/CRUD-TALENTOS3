@@ -1,0 +1,71 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body{
+    font-family: 'Raleway', sans-serif;
+  }
+
+  header{
+      width: 100%;
+      height: auto;
+      position: relative;
+      overflow: hidden;
+  }
+
+  .modalAsi{
+      padding: 10px;
+  }
+
+  .btn{
+      margin: 5px;
+  }
+
+  video{
+      width: 100%;
+  }
+
+  .absolute{
+      width: 100%;
+      height: 100%;
+      top: 0;
+      right: 0;
+      position: absolute;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items:center;
+  }
+
+  h1{
+      font-size: 80px;
+      font-weight: 900;
+      z-index: 100;
+      color:#fff;
+      margin-bottom: 30px;
+  }
+
+  h1::after{
+      display: block;
+      width: 30%;
+      height: 10px;
+      content: "";
+      margin: auto;
+      background: #fff;
+  }
+
+  .overlay{
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      background: rgba(0, 0, 0, 0.575);
+  }
+      table.dataTable thead {
+          background-color: #076d18;
+          color: aliceblue;
+      }
+      .nav-link{
+        margin-top:9px;
+    }
