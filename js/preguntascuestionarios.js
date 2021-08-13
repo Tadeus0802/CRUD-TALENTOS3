@@ -25,7 +25,7 @@ $(document).ready(function () {
             {"data": "idpreguntas"},
             {"data": "descripcion"},
             {"data": "categoria"},
-            { "defaultContent": "<div class='text-center'><div class='btn-group'><button class=''><button class='btn btn-info btn-sm btnAsignar'>Asignar al cuestionario</button></div></div>" }
+            { "defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-info btn-sm btnAsignar'>Asignar al cuestionario</button></div></div>" }
         ],
         'language':{
             "url": "http://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
