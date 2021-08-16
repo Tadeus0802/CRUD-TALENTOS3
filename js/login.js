@@ -17,8 +17,17 @@ $('#logout').click(()=>{
     .signOut()
     .then(err=>{
         if(err)console.log(err);
-        alert("Session cerrada");
-        window.location.replace('../index.html');
+        Swal.fire({
+            title: '¿Quiere cerrar sesion?',
+            showCancelButton: true,
+            confirmButtonText: `Confirmar`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.replace('../index.html')  
+            };  
+        })
+        
+        
     })
     .catch(err=>{
         if(err)console.log(err);

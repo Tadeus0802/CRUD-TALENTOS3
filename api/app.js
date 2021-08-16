@@ -23,6 +23,7 @@ app.use('/api/cuestionarios/:id',routerCuestionarios);
 app.use('/',routerPreguntas);
 app.use('/api/preguntas',routerPreguntas);
 app.use('/api/preguntas/:idpregunta',routerPreguntas);
+app.use('/api/mostrarPreguntasHabilitadas/:idcuestionarios:estado',routerPreguntas);
 
 
 //rutas de asignar preguntas 

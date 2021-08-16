@@ -14,11 +14,12 @@ res.send("Ruta Inicio");
     });
   });
   //Mostrar preguntas habilitadas
-router.get("/api/mostrarPreguntasHabilitadas/:estado",(req,res)=>{
-  con.query('select * from preguntas where estado=?',[req.params.estado],(err,result)=>{
-    if(err)throw err;
- //   con.query('insert into enlace where inner join preguntas where p.estado=? and p.categoria=?')
-    res.send(result);
+router.get("/api/mostrarPreguntasHabilitadas/:idcuestionarios:estado",(req,res)=>{
+  let sql=`select * from preguntas where estado='${req.params.estado}'`;
+    con.query(sql,(err,result)=>{
+    if(err)throw err; 
+        res.send(result);
+
 });
 })
 
@@ -54,10 +55,13 @@ router.post('/api/preguntas/', (req, res) => {
 
   con.query(sql, data,(err,result2) => {
     if (err){
-      console.log("ya existe esta pregunta");
-      res.send(err);
+   let error="ya existe esta pregunta";
+      res.send(error);
     }
-    res.send(result2);
+    else{
+    result2.message="Se creo la pregunta con exito";
+    res.send(result2.message);
+    }
   });
 
     
@@ -72,8 +76,14 @@ router.post('/api/preguntas/', (req, res) => {
     let categoria=req.body.categoria;
     let sql = 'UPDATE preguntas SET descripcion= ?, estado= ?, categoria=? WHERE idpreguntas= ?';
     con.query(sql, [descripcion, estado,categoria,idpregunta], (error, results) => {
-      if (error)throw error;
-        res.send(results);
+      if (error){
+        let err="Ya existe esta pregunta";
+        res.send(err);
+      }
+        else{
+          results.message="Se edito la pregunta con exito";
+          res.send(results.message);
+        }
       
     });
   });
@@ -91,11 +101,14 @@ router.post('/api/preguntas/', (req, res) => {
             //por ende se deshabilita la pregunta
             con.query('update preguntas  SET estado=? where idpreguntas=?',["Deshabilitado",idpreguntas],(err,resultado)=>{
               if(err)throw err;
-              res.send(resultado);
+              resultado.message="La pregunta esta asignada a algún cuestionario, se deshabilitará";
+              res.send(resultado.message);
+              
             });
           } 
           else{
-            res.send(results);
+            results.message="La pregunta se elimino";
+            res.send(results.message);
           }
                
       });

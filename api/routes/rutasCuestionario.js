@@ -152,10 +152,14 @@ router.delete('/api/cuestionarios/:id',(req,res)=>{
         if(err){
             //por ende se deshabilita el cuestionario
             con.query("update cuestionarios set estado=? where idcuestionarios=?",["Deshabilitado",idcuestionarios],(err2,result2)=>{
-                if(err2) throw err2;
+            result2.messsage="No se elimino el cuestionario,tiene preguntas habilitadas";
+            res.send(result2.messsage);
             });
         }
-        res.send(result);
+        else{
+            let success="Se elimino el cuestionario";
+            res.send(success);
+        }
     });
 });
 

@@ -20,9 +20,14 @@ router.post('/api/cuestionarios/asignarPregunta/:idpreguntas',(req,res)=>{
   let idcuestionarios=req.body.idcuestionarios;
   con.query('insert into enlaces set ?',{idcuestionarios,idpreguntas},(err,result3)=>{
     if(err){
-      console.log("ya hay una pregunta asignada a este cuestionario") 
+     let error = 'Esta pregunta ya esta asignada';
+      res.send(error);
     }
-    res.send(result3);
+    else{
+      result3.message='Esta pregunta se asigno con exito'
+      res.send(result3.message);
+    }
+   
   });
 });
   
