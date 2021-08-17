@@ -5,7 +5,7 @@ $(document).ready(function () {
     let opcion = null;
 
     let idpreguntas, idcuestionarios;
-    let habilitado= "habilitado"
+    let habilitado= "Habilitado";
     document.getElementById("mostrarNombre").innerHTML+=sessionStorage.getItem("usuarioCreador");
 
     //idcuestionario es igual al valor de la llave idcuestionario2 mediante el metodo del objeto sessionStorage, y es convertida a numero mediante la función parseInt
@@ -18,7 +18,7 @@ $(document).ready(function () {
     //MOSTRAR PREGUNTAS EN EL MODAL DE ASIGNAR PREGUNTAS
     let tablaPreguntas = $('#tablaPreguntas').DataTable({
         "ajax": {
-            "url": urlPreguntas + habilitado,
+            "url": urlPreguntas +idcuestionarios+ habilitado,
             "dataSrc": ""
         },
         "columns": [
@@ -64,7 +64,7 @@ $(document).ready(function () {
         $('.btnAsignar').click(function(){
             fila = $(this).closest("tr");  
             idpreguntas = parseInt(fila.find('td:eq(0)').text()); 
-            fila.find('td:eq(3)').html("<div class='text-center'><div class='btn-group'><button class='btn btn-success btn-sm btnAsignar'>Asignado!</button></div></div>"); 
+            //fila.find('td:eq(3)').html("<div class='text-center'><div class='btn-group'><button class='btn btn-success btn-sm btnAsignar'>Asignado!</button></div></div>"); 
                 
             //asignamos la pregunta a x cuestionario
             if (opcion == 'asignar') {
@@ -74,7 +74,21 @@ $(document).ready(function () {
                     contentType:"application/json",
                     data:JSON.stringify({idcuestionarios:idcuestionarios, idpreguntas:idpreguntas}),
                     success: function (data) {
+                    if(data=='Esta pregunta ya esta asignada'){
+                        Swal.fire({
+                            icon:'error',
+                            title:data
+                        });
                         tablaCuestionario.ajax.reload(null, false);
+                    }
+                    else{
+                        console.log(data);
+                        Swal.fire({
+                            icon:'success',
+                            title:data
+                        });
+                        tablaCuestionario.ajax.reload(null, false);
+                    }  
                     }
                 });
             }

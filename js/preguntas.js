@@ -72,9 +72,23 @@ $(document).ready(function () {
                     method: 'delete',
                     data: { idpreguntas: idpreguntas },
 
-                    success: function () {
-                        tablaCuestionario.ajax.reload(null, false);
-                        Swal.fire('¡Pregunta Eliminado!', '', 'success')
+                    success: function (data) {
+                        if(data=="La pregunta esta asignada a algún cuestionario, se deshabilitará"){
+                            Swal.fire({
+                                icon:'error',
+                                title:data
+                            });
+                            tablaCuestionario.ajax.reload(null, false);
+                        }
+                        else{
+                            Swal.fire({
+                                icon:'success',
+                                title:data
+                            });
+                            tablaCuestionario.ajax.reload(null, false);
+                        }
+                        
+                  
                     }
                 });
                
@@ -106,7 +120,20 @@ $(document).ready(function () {
                 data: JSON.stringify({descripcion: descripcion, estado: estado,categoria:categoria}),
 
                 success: function (data) {
-                    tablaCuestionario.ajax.reload(null, false);
+                    if(data=="ya existe esta pregunta"){
+                        Swal.fire({
+                            icon:"error",
+                            title:data
+                        })
+                    }
+                    else{
+                        Swal.fire({
+                            icon:"success",
+                            title:data
+                        })
+                        tablaCuestionario.ajax.reload(null, false);
+                    }
+                    
                 }
             });
         }
@@ -124,8 +151,20 @@ $(document).ready(function () {
                 method: 'put',
                 contentType: 'application/json',
                 data: JSON.stringify({ idpreguntas: idpreguntas, descripcion: descripcion, estado: estado,categoria:categoria}),
-                success:()=>{
-                    tablaCuestionario.ajax.reload(null, false);
+                success:data=>{
+                    if(data=="Ya existe esta pregunta"){
+                        Swal.fire({
+                            icon:'error',
+                            title:data
+                        });
+                    }
+                    else{
+                        Swal.fire({
+                            icon:'success',
+                            title:data
+                        });
+                        tablaCuestionario.ajax.reload(null, false);
+                    }
                 }
             });
         }

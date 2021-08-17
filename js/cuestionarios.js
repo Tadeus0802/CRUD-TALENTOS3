@@ -104,7 +104,7 @@ $(document).ready(function() {
         fila = $(this);           
         id = parseInt($(this).closest('tr').find('td:eq(0)').text());            
         Swal.fire({
-            title: '¿Confirma eliminar el cuestionario? Si el cuestionario tiene por lo menos 1 pregunta asignada, se deshabilitara',                
+            title: '¿Confirma eliminar el cuestionario?',                
             showCancelButton: true,
             confirmButtonText: `Confirmar`,                
             }).then((result) => {               
@@ -113,11 +113,23 @@ $(document).ready(function() {
                     url: url+id,
                     method: 'delete',                        
                     data:  {id:id},    
-                    success: function() {
-                        tablaCuestionarios.ajax.reload(null, false);      
+                    success: function(data) {
+                    if(data=="No se elimino el cuestionario,tiene preguntas habilitadas"){
+                        Swal.fire({
+                            icon:"error",
+                            title:data
+                        });
+                        tablaCuestionarios.ajax.reload(null,false);
+                    }
+                    else{
+                        Swal.fire({
+                            icon:"success",
+                            title:data
+                        });
+                        tablaCuestionarios.ajax.reload(null,false);
+                    }
                     }
                 });
-                Swal.fire('¡Cuestionario Eliminado!', '', 'success')
             } 
             })
     });   
