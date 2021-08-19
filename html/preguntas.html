@@ -18,30 +18,30 @@
         href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" type="text/css" href="../estilos/preguntas.css">
-  
+    <link rel="shortcut icon" type="image/png" href="favicon.png"/>
 </head>
 
 <body>
         
-        <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark" style="padding-left: 20px;">
-            <h3 class="navbar-brand text-white"> Talentos 3 </h3>
-            <button class="navbar-toggler" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" data-toggle="collapse" type="button">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-    
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav mr-auto">
-                    <il class="navbar-item">
-                        <a href="./presentacion.html" class="nav-link">Inicio</a>
-                      </il>
-                    <il class="navbar-item">
-                        <a href="./cuestionarios.html" class="nav-link">Cuestionarios</a>
-                    </il>
-                    <il class="navbar-item">
-                        <a href="./preguntas.html" class="nav-link">Preguntas</a>
-                    </il>
-                </ul>
-            </div>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark" style="padding-left: 20px;">
+        <h3 class="navbar-brand text-white pr-2">Talentos 3</h3>
+        <button class="navbar-toggler" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" data-toggle="collapse" type="button">
+            <span class="navbar-toggler-icon"></span>
+            
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <il class="navbar-item">
+                    <a href="./presentacion.html" class="nav-link">Inicio</a>
+                  </il>
+            <il class="navbar-item">
+                <a href="cuestionarios.html" class="nav-link">Cuestionarios</a>
+            </il>
+            <il class="navbar-item">
+                <a href="preguntas.html" class="nav-link">Preguntas</a>
+            </il>
+            </ul>
             <div class="navbar-item mr-3 mt-3">
                 <p id="mostrarNombre" class=" text-white"></p>
             </div>
@@ -52,7 +52,9 @@
                     </a>
                 </div>
             </div>
-        </nav>
+        </div>
+        
+    </nav>
 
     <div class="container-fluid" style="margin-top: 5rem;">
         <button id="btnCrear" class="btn btn-dark mt-2">Crear</button>
@@ -90,9 +92,11 @@
                         <label for="" class="col-form-label">Pregunta:</label>
                         <input id="descripcion" type="text" class="form-control" required>
 
-                        <label class="col-form-label">Check para habilitado</label>
+                        <label for="" class="col-form-label">Estado:</label>
+                        <label class="col-form-label">Habilitar</label>
                         <input type="checkbox" id="estado" checked>
                         <br>
+                        
                         <label for="" class="col-form-label">Categoria</label>
                         <select class="form-control" id="categoria">
                             <option >Deporte</option>
