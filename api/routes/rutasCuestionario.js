@@ -22,7 +22,6 @@ if(result[0]){
            let idcuestionariosOrg=result3;
              const data={
                    idcuestionarios:idcuestionariosOrg,
-            fechaCreacion:req.body.fecha,
             usuarioCreador:req.body.usuario,
             descripcion:req.body.descripcion+"(Clon)",
             estado:req.body.estado
@@ -57,7 +56,6 @@ if(result[0]){
            
              const data={
                    idcuestionarios:result3,
-            fechaCreacion:req.body.fecha,
             usuarioCreador:req.body.usuario,
             descripcion:req.body.descripcion,
             estado:req.body.estado
@@ -83,7 +81,6 @@ else{
            
              const data={
                    idcuestionarios:result3,
-            fechaCreacion:req.body.fecha,
             usuarioCreador:req.body.usuario,
             descripcion:req.body.descripcion,
             estado:req.body.estado
@@ -129,13 +126,12 @@ router.get('/api/cuestionarios/:id',(req,res)=>{
 
 
 router.put('/api/cuestionarios/:id',(req,res)=>{
-    let fecha=req.body.fecha;
     let usuario=req.body.usuario;
     let descripcion=req.body.descripcion;
     let estado=req.body.estado;
     let id=req.params.id;
-    let sql="update cuestionarios set fechaCreacion=?,usuarioCreador=?,descripcion=?,estado=? where idcuestionarios=?";
-    con.query(sql,[fecha,usuario,descripcion,estado,id],(err,result)=>{
+    let sql="update cuestionarios set usuarioCreador=?,descripcion=?,estado=? where idcuestionarios=?";
+    con.query(sql,[usuario,descripcion,estado,id],(err,result)=>{
         if(err)throw err;
         res.send(result);
 
