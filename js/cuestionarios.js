@@ -40,7 +40,7 @@ $(document).ready(function() {
         $("#formArticulos").trigger("reset");
         $(".modal-header").css( "background-color", "#23272b");
         $(".modal-header").css( "color", "white" );
-        $(".modal-title").text("Crear Artículo");
+        $(".modal-title").text("Crear cuestionario");
         $('#modalCRUD').modal('show');	 
         $("#estado").prop("checked", true);  
     });  
@@ -50,18 +50,18 @@ $(document).ready(function() {
         opcion='editar';
         fila = $(this).closest("tr");	        
         id = parseInt(fila.find('td:eq(0)').text());
-        fecha = fila.find('td:eq(1)').text();
+       // fecha = fila.find('td:eq(1)').text();
         usuario = fila.find('td:eq(2)').text();
         descripcion = fila.find('td:eq(3)').text();   
         estado = fila.find('td:eq(4)').text();        
         $("#id").val(id);
-        $("#fecha").val(fecha);
+        //$("#fecha").val(fecha);
         $("#usuario").val(usuario);
         $("#descripcion").val(descripcion);
         $("#estado").val(estado);           
         $(".modal-header").css("background-color", "#7303c0");
         $(".modal-header").css("color", "white" );
-        $(".modal-title").text("Editar Artículo");		
+        $(".modal-title").text("Editar cuestionario");		
         $('#modalCRUD').modal('show');	
         	   
     });
@@ -82,7 +82,7 @@ $(document).ready(function() {
     $(document).on("click",".btnClonar",function(){
         let fila2=$(this).closest("tr");
         let id = fila2.find('td:eq(0)').text();
-        let fecha = fila2.find('td:eq(1)').text();
+        //let fecha = fila2.find('td:eq(1)').text();
         let descripcion = fila2.find('td:eq(3)').text();   
         let estado = fila2.find('td:eq(4)').text();        
         usuario = sessionStorage.getItem("usuarioCreador"); 
@@ -90,7 +90,7 @@ $(document).ready(function() {
         url:url,
         method:"post",
         contentType:"application/json",
-        data:JSON.stringify({id:id,fecha:fecha,usuario:usuario,descripcion:descripcion,estado:estado}),
+        data:JSON.stringify({id:id,usuario:usuario,descripcion:descripcion,estado:estado}),
         success:function(){
             tablaCuestionarios.ajax.reload(null,false);
             Swal.fire("Cuestionario Clonado");
@@ -138,7 +138,7 @@ $(document).ready(function() {
     $('#formArticulos').submit(function(e){                                     
         e.preventDefault();
         id = $.trim($('#id').val());    
-        fecha = $.trim($('#fecha').val());
+        //fecha = $.trim($('#fecha').val());
         usuario = sessionStorage.getItem("usuarioCreador");    
         descripcion = $.trim($('#descripcion').val()); 
         estado = $.trim($('#estado').val());   
@@ -154,7 +154,7 @@ $(document).ready(function() {
                 url: url,
                 method: 'post',                                                         
                 contentType: 'application/json',  
-                data:  JSON.stringify({fecha:fecha, usuario:usuario, descripcion:descripcion, estado: estado}),                       
+                data:  JSON.stringify({ usuario:usuario, descripcion:descripcion, estado: estado}),                       
 
                 success: function(data) {                       
                     tablaCuestionarios.ajax.reload(null, false);                        
@@ -176,7 +176,7 @@ $(document).ready(function() {
                 url: url+id,
                 method: 'put',                                        
                 contentType: 'application/json',  
-                data:  JSON.stringify({id:id, fecha:fecha , usuario:usuario, descripcion:descripcion, estado:estado}),
+                data:  JSON.stringify({id:id, usuario:usuario, descripcion:descripcion, estado:estado}),
                 success: function() {
                     tablaCuestionarios.ajax.reload(null, false);      
                 }

@@ -1,6 +1,7 @@
 CREATE TABLE cuestionarios
 (	idcuestionarios INT NOT NULL,
-	fechaCreacion varchar(50) NOT NULL,
+	fechaCreacion timestamp not null default current_timestamp,
+//	fechaCreacion varchar(50) NOT NULL,
 	usuarioCreador varchar(50) NOT NULL,
 	descripcion varchar(255) NOT NULL,
 	estado varchar(50) NOT NULL,

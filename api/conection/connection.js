@@ -4,7 +4,7 @@ const pool=mysql.createPool({
 	host:"sql248.main-hosting.eu",
 	user:'u836417525_enc',
 	password:'T@lentos2021',
-	database:'u836417525_enc'
+	database:'u836417525_enc'	
 });
 var con=pool;
 module.exports=con;
