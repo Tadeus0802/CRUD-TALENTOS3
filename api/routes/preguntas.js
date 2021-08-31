@@ -14,14 +14,17 @@ res.send("Ruta Inicio");
     });
   });
   //Mostrar preguntas habilitadas
-router.get("/api/mostrarPreguntasHabilitadas/:idcuestionarios:estado",(req,res)=>{
-  let sql=`select * from preguntas where estado='${req.params.estado}'`;
+router.get("/api/preguntas/mostrarPreguntasHabilitadas/:idcuestionarios",(req,res)=>{
+  let sql=`select * from preguntas inner join enlaces on preguntas.idpreguntas=enlaces.idpreguntas where enlaces.idcuestionarios<>${req.params.idcuestionarios} and preguntas.idpreguntas="habilitado"`;
     con.query(sql,(err,result)=>{
-    if(err)throw err; 
-        res.send(result);
+      if(err)throw err; 
+     res.send(result);
+      
+       
+  });
 
 });
-})
+
 
   //Mostrar una sola pregunta
   router.get('/api/preguntas/:idpregunta', (req,res)=>{

@@ -1,11 +1,10 @@
 $(document).ready(function () {
     let url = 'http://localhost:3000/api/cuestionarios/preguntas/';
-    let urlPreguntas = 'http://localhost:3000/api/mostrarPreguntasHabilitadas/';
+    let urlPreguntas = 'http://localhost:3000/api/preguntas/mostrarPreguntasHabilitadas/';
     let urlAsignar = 'http://localhost:3000/api/cuestionarios/asignarPregunta/';
     let opcion = null;
 
     let idpreguntas, idcuestionarios;
-    let habilitado= "Habilitado";
     document.getElementById("mostrarNombre").innerHTML+=sessionStorage.getItem("usuarioCreador");
 
     //idcuestionario es igual al valor de la llave idcuestionario2 mediante el metodo del objeto sessionStorage, y es convertida a numero mediante la función parseInt
@@ -18,7 +17,7 @@ $(document).ready(function () {
     //MOSTRAR PREGUNTAS EN EL MODAL DE ASIGNAR PREGUNTAS
     let tablaPreguntas = $('#tablaPreguntas').DataTable({
         "ajax": {
-            "url": urlPreguntas +idcuestionarios+ habilitado,
+            "url": urlPreguntas +idcuestionarios,
             "dataSrc": ""
         },
         "columns": [

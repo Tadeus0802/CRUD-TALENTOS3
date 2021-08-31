@@ -38,9 +38,11 @@ if(result[0]){
             for(let i=0;i<result.length;i++){
                 con.query("insert into enlaces set ?",{idcuestionarios:idcuestionariosOrg,idpreguntas:result[i].idpreguntas},(err,result)=>{
                     if(err) throw err;
+                    console.log(result.fechaCreacion);   
                 });
             }
         });
+        
         res.send(result);
         });
     
@@ -126,11 +128,11 @@ router.get('/api/cuestionarios/:id',(req,res)=>{
 
 
 router.put('/api/cuestionarios/:id',(req,res)=>{
-    let usuario=req.body.usuario;
+    
     let descripcion=req.body.descripcion;
     let estado=req.body.estado;
     let id=req.params.id;
-    let sql="update cuestionarios set usuarioCreador=?,descripcion=?,estado=? where idcuestionarios=?";
+    let sql="update cuestionarios set descripcion=?,estado=? where idcuestionarios=?";
     con.query(sql,[usuario,descripcion,estado,id],(err,result)=>{
         if(err)throw err;
         res.send(result);
