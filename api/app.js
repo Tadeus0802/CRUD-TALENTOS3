@@ -1,7 +1,6 @@
 
 const express= require('express');
 const cors=require('cors');
-const session=require('express-session');
 const app= express();
 //invocamos a dotenv
 require('dotenv').config({path:'./env/.env'});
@@ -11,11 +10,7 @@ const preguntas=require('./routes/preguntas');
 const asignarPreguntas=require('./routes/cuestionariosPreguntas');
 const login=require('./routes/login');
 
-app.use(cors(),express.json(),express.urlencoded({extended:false}),session({
-    secret:'secret',
-    resave:true,
-    saveUninitialized:true
-}));
+app.use(cors(),express.json(),express.urlencoded({extended:false}));
 
 //peticiones de cuestionario
 app.use('/',cuestionarios);
