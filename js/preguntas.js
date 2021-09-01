@@ -122,7 +122,7 @@
                         'Content-Type':'application/json',
                         'authorization':token
                     },
-                    body:JSON.stringigy(data)
+                    body:JSON.stringify(data)
                 })
                 .then(response=>response.json())
                 .then(data=>Swal.fire({icon:data.icon,title:data.title}).then(()=> tablaCuestionario.ajax.reload(null, false)))

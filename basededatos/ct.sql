@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 31-08-2021 a las 05:39:16
+-- Tiempo de generación: 01-09-2021 a las 23:44:30
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 8.0.9
 
@@ -40,8 +40,9 @@ CREATE TABLE `cuestionarios` (
 --
 
 INSERT INTO `cuestionarios` (`idcuestionarios`, `fechaCreacion`, `usuarioCreador`, `descripcion`, `estado`) VALUES
-(1, '2021-08-31 03:26:37', 'ariel3', 'Cuestionario EJemplo', 'Habilitado'),
-(2, '2021-08-31 03:26:40', 'ariel3', 'Cuestionario EJemplo2', 'Habilitado');
+(1, '2021-09-01 21:39:21', 'ariel3259', 'cuestionario 1', 'Habilitado'),
+(2, '2021-09-01 21:39:22', 'ariel3259', 'cuestionario 1(Clon)', 'Habilitado'),
+(3, '2021-09-01 21:39:24', 'ariel3259', 'cuestionario 1(Clon)(Clon)', 'Habilitado');
 
 -- --------------------------------------------------------
 
@@ -64,8 +65,17 @@ CREATE TABLE `preguntas` (
   `idpreguntas` int(11) NOT NULL,
   `descripcion` varchar(255) NOT NULL,
   `estado` varchar(50) NOT NULL,
-  `categoria` varchar(50) NOT NULL,
+  `categoria` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `preguntas`
+--
+
+INSERT INTO `preguntas` (`idpreguntas`, `descripcion`, `estado`, `categoria`) VALUES
+(3, 'pregunta 3', 'Deshabilitado', 'Deporte'),
+(4, 'pregunta 4 ', 'Deshabilitado', 'Deporte'),
+(5, 'pregunta 5 ', 'Deshabilitado', 'Deporte');
 
 -- --------------------------------------------------------
 
@@ -88,7 +98,8 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`idUser`, `user`, `password`, `fullName`, `rol`) VALUES
 (1, 'ariel3', '$2a$08$mwG7OxhxAkXTZr.67TODUeTYJhXgBDLDCBudY4.yyxVaxRNN7hYFe', ' ezequiel santangelo', 'user'),
 (2, 'ariel3259', '$2a$08$7pyfbqI.qGjupPTwCH0J.OpFwD0EK6qExwKwLGxx3NpWDw9AjYtnC', 'Ariel Ezequiel Santangelo', 'admin'),
-(3, 'ariel33', '$2a$08$I0VQpX/87MIgKGcByH7SGOf/m4KJWq2OAm2itSovyDQ8vlAEXmTK2', 'ARIEL SANTANGELO', 'user');
+(3, 'ariel33', '$2a$08$I0VQpX/87MIgKGcByH7SGOf/m4KJWq2OAm2itSovyDQ8vlAEXmTK2', 'ARIEL SANTANGELO', 'user'),
+(4, 'ezequiel9523', '$2a$08$YkmmEAc266KkSjlIx1evGehCffJjvS5HgMzc4Sl72DNaWpyB5IVsK', 'Ezequiel Santangelo', 'user');
 
 --
 -- Índices para tablas volcadas
