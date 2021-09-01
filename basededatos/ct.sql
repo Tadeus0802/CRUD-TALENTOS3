@@ -63,7 +63,8 @@ CREATE TABLE `enlaces` (
 CREATE TABLE `preguntas` (
   `idpreguntas` int(11) NOT NULL,
   `descripcion` varchar(255) NOT NULL,
-  `estado` varchar(50) NOT NULL
+  `estado` varchar(50) NOT NULL,
+  `categoria` varchar(50) NOT NULL,
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------

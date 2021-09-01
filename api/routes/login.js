@@ -1,6 +1,8 @@
 const {Router}= require('express');
 const bcryptjs=require('bcryptjs');
 const con=require('../conection/connection');
+const jwt=require('jsonwebtoken');
+require('dotenv').config({path:'../env/.env'});
 const router=Router();
 
 router.get('/',(req,res)=>res.send('Pagina principal'));
@@ -28,19 +30,20 @@ con.query('select max(idUser)+1 as idUser from users',async (err,result)=>{
                 title:'REGISTRO FALLIDO',
                 text:'el usuario ya existe',
                 showConfirmButton:false,
-                timer:1500
+                timer:3000
             }
         res.send(datas);
         }
        else{
+        
         const datas={
             success:true,
             icon:'success',
             title:'REGISTRO COMPLETADO',
             text:'',
             showConfirmButton:false,
-            timer:1500
-        }
+            timer:3000,
+        };
         res.send(datas);
        }
     })
@@ -55,11 +58,11 @@ router.post('/api/login/',async (req,res)=>{
         user:req.body.user,
         password:req.body.password
     };
-    con.query('select * from users where user=?',[data.user],async (err,result)=>{
+    const {user}=data;
+    con.query('select * from users where user=?',[user],async (err,result)=>{
         if(err)throw err;
         if(result.length==0 || !(await bcryptjs.compare(data.password,result[0].password))){
-            err={
-                
+            err={ 
                 icon:'error',
                 title:'SESSION FALLIDA',
                 text:'usuario o contraseña incorrectos',
@@ -70,19 +73,20 @@ router.post('/api/login/',async (req,res)=>{
             res.send(err);
         }
         else{
-            const datas={
-                
+            const datas={    
                 icon:'success',
                 title:'SESSION INICIADA',
-                text:`Bienvenido ${data.user}`,
+                text:`Bienvenido ${user}`,
                 showConfirmButton:true,
                 timer:1500,
-                user:result[0].user,
+                user:user,
                 idUser:result[0].idUser,
-                success:true
+                success:true,
+                token:jwt.sign({check:true},process.env.KEY,{expiresIn:'7d'})
             };
             res.send(datas);
         }
     });
 });
+
 module.exports=router;

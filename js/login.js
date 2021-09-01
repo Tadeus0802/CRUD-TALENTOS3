@@ -32,7 +32,7 @@ if(logout){
                 confirmButtonText: `Confirmar`,
             }).then((result) => {
                 if (result.isConfirmed) {
-                    sessionStorage.setItem('user',null)
+                    sessionStorage.setItem('usuario',null)
                    window.location.replace('../index.html')
                 };  
             })
@@ -62,10 +62,10 @@ if(formLogin){
        })
        .then(response=>response.json())
        .then(datas=>{
-           console.log(datas.success)
         if(datas.success){
             sessionStorage.setItem('usuario',datas.user);
             sessionStorage.setItem('idUser',datas.idUser);
+            sessionStorage.setItem('token',datas.token);
             Swal.fire({icon:datas.icon,title:datas.title,text:datas.text,showConfirmButton:datas.showConfirmButton,timer:datas.timer})
            .then(event=>window.location.replace("./html/presentacion.html"))
         }

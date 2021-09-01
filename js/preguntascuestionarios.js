@@ -1,9 +1,11 @@
+
+
 $(document).ready(function () {
     let url = 'http://localhost:3000/api/cuestionarios/preguntas/';
     let urlPreguntas = 'http://localhost:3000/api/preguntas/mostrarPreguntasHabilitadas/';
     let urlAsignar = 'http://localhost:3000/api/cuestionarios/asignarPregunta/';
     let opcion = null;
-
+    const token=sessionStorage.getItem('token');
     let idpreguntas, idcuestionarios;
     document.getElementById("mostrarNombre").innerHTML+=sessionStorage.getItem("usuarioCreador");
 
@@ -13,12 +15,15 @@ $(document).ready(function () {
     
     //document.getElementById("titulo").innerHTML=`Cuestionario N°: ${idcuestionarios} <br> `;
     document.getElementById("subtitulo").innerHTML=`Título: ${titulo}`;
-
+    let estado="Habilitado";
     //MOSTRAR PREGUNTAS EN EL MODAL DE ASIGNAR PREGUNTAS
     let tablaPreguntas = $('#tablaPreguntas').DataTable({
         "ajax": {
-            "url": urlPreguntas +idcuestionarios,
-            "dataSrc": ""
+            "url": urlPreguntas +idcuestionarios+estado,
+            "dataSrc": "",
+            "headers":{
+                'authorization':token
+            }
         },
         "columns": [
             {"data": "idpreguntas"},
@@ -32,10 +37,13 @@ $(document).ready(function () {
     });
 
     //MOSTRAR PREGUNTAS DE CUESTIONARIO
-    let tablaCuestionario = $('#tablaCuestionario').DataTable({
+    let tablaCuestionarios = $('#tablaCuestionario').DataTable({
         "ajax": {
             "url": url + idcuestionarios,
-            "dataSrc": ""
+            "dataSrc": "",
+             "headers":{
+                    'authorization':token
+                }
         },
         "columns": [
             {"data": "idpreguntas"},
@@ -43,8 +51,8 @@ $(document).ready(function () {
             {"data": "categoria"},
 
             {"defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-danger btn-sm btnBorrar'>Desasignar</button></div></div>" }
-        ],
-        'language':{
+       ],
+     'language':{
             "url": "http://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
         },
     });
@@ -67,29 +75,17 @@ $(document).ready(function () {
                 
             //asignamos la pregunta a x cuestionario
             if (opcion == 'asignar') {
-                $.ajax({
-                    url: urlAsignar + idpreguntas,
-                    method:"post",
-                    contentType:"application/json",
-                    data:JSON.stringify({idcuestionarios:idcuestionarios, idpreguntas:idpreguntas}),
-                    success: function (data) {
-                    if(data=='Esta pregunta ya esta asignada'){
-                        Swal.fire({
-                            icon:'error',
-                            title:data
-                        });
-                        tablaCuestionario.ajax.reload(null, false);
-                    }
-                    else{
-                        console.log(data);
-                        Swal.fire({
-                            icon:'success',
-                            title:data
-                        });
-                        tablaCuestionario.ajax.reload(null, false);
-                    }  
-                    }
-                });
+                fetch(urlAsignar+idpreguntas,{
+                    method:'post',
+                    mode:'cors',
+                    headers:{
+                        'Content-Type':'application/json',
+                        'authorization':token
+                    },
+                    body:JSON.stringify({idcuestionarios:idcuestionarios})
+                })
+                .then(response=>response.json())
+                .then(data=>Swal.fire({icon:data.icon,title:data.title}).then(()=>tablaCuestionarios.ajax.reload(null,false)))
             }
         })
     });
@@ -107,15 +103,15 @@ $(document).ready(function () {
             confirmButtonText: `Confirmar`,
         }).then((result) => {
             if (result.isConfirmed) {
-                $.ajax({
-                    url: 'http://localhost:3000/api/cuestionarios/desasignarPreguntas/'+idpreguntas+idcuestionarios,
-                    method: 'delete',
-                    success: function (data) {
-                        console.log(idcuestionarios);
-                        tablaCuestionario.ajax.reload(null, false);
-                        Swal.fire('¡Pregunta Desasignada!', '', 'success');
-                    }
-                });
+                fetch('http://localhost:3000/api/cuestionarios/desasignarPreguntas/'+idpreguntas+idcuestionarios,{
+                    method:'delete',
+                    mode:'cors',
+                    headers:{
+                        'Content-Type':'application/json',
+                        'authorization':token
+                    }   
+                })
+                .then(response=>Swal.fire('¡Pregunta Desasignada!', '', 'success').then(()=>tablaCuestionarios.ajax.reload(null,false)))
                
             }
         })

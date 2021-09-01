@@ -26,7 +26,7 @@ app.use('/api/cuestionarios/:id',cuestionarios);
 app.use('/',preguntas);
 app.use('/api/preguntas',preguntas);
 app.use('/api/preguntas/:idpregunta',preguntas);
-app.use('/api/preguntas/mostrarPreguntasHabilitadas/:idcuestionarios',preguntas);
+app.use('/api/preguntas/mostrarPreguntasHabilitadas/:idcuestionarios:estado',preguntas);
 
 
 //peticiones de asignar preguntas 

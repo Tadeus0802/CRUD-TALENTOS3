@@ -1,6 +1,6 @@
 const mysql=require('mysql');
 const pool=mysql.createPool({
-	connectionLimit:1000,
+	connectionLimit:10,
 /*
 	host:"sql248.main-hosting.eu",
 	user:'u836417525_enc',

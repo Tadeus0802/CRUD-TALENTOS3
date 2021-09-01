@@ -2,32 +2,73 @@ const express=require('express');
 const router=express.Router();
 const con=require('../conection/connection');
 
-router.get("/", (req, res) => {
-res.send("Ruta Inicio");
+require('dotenv').config({path:'../env/.env'});
+const jwt=require('jsonwebtoken');
+const verificacion=express.Router();
+
+
+verificacion.use((req,res,next)=>{
+    let token=req.headers['x-access-token']||req.headers['authorization'];
+    //  console.log(token);  
+        if(!token){
+            res.status(401).send({
+                error:'Es necesario un token de autentificacion'
+            })
+            return
+        }
+        if(token.startsWith('Bearer ')){
+                token=token.slice(7,token.length);
+                console.log(token);
+        }
+        if(token){
+            jwt.verify(token,process.env.KEY,(err,decoded)=>{
+                if(err){
+                    return res.json({
+                        message:'El token no es valido'
+                    })
+                }
+                else{
+                    req.decoded=decoded;
+                    next();
+                }
+    
+            })
+        }
 });
-  
+
+router.get("/", (req, res) => res.send("Ruta Inicio"));
+
+//convertir estado de booleano a habilitado/desabilitado
+function conv(param){
+  if(param){
+      return "Habilitado";
+  }
+  else{
+      return "Deshabilitado";
+  }
+}  
+
   //Obtener todas las preguntas
-  router.get("/api/preguntas", (req, res) => {
+  router.get("/api/preguntas",verificacion, (req, res) => {
     con.query('SELECT * FROM preguntas', (error, filas) => {
       if (error)throw error;
         res.send(filas);
     });
   });
   //Mostrar preguntas habilitadas
-router.get("/api/preguntas/mostrarPreguntasHabilitadas/:idcuestionarios",(req,res)=>{
-  let sql=`select * from preguntas inner join enlaces on preguntas.idpreguntas=enlaces.idpreguntas where enlaces.idcuestionarios<>${req.params.idcuestionarios} and preguntas.idpreguntas="habilitado"`;
+router.get("/api/preguntas/mostrarPreguntasHabilitadas/:idcuestionarios:estado",verificacion,(req,res)=>{
+ 
+  let sql=`select * from preguntas where preguntas.idpreguntas not in (SELECT enlaces.idpreguntas FROM enlaces WHERE enlaces.idcuestionarios =${req.params.idcuestionarios}) and preguntas.estado='${req.params.estado}'`;
     con.query(sql,(err,result)=>{
       if(err)throw err; 
-     res.send(result);
-      
-       
+     res.send(result);  
   });
 
 });
 
 
   //Mostrar una sola pregunta
-  router.get('/api/preguntas/:idpregunta', (req,res)=>{
+  router.get('/api/preguntas/:idpregunta',verificacion, (req,res)=>{
       con.query('SELECT * FROM preguntas WHERE idpreguntas = ?', [req.params.idpregunta],(error,fila)=>{
           if(error)throw error;
            res.send(fila)
@@ -36,7 +77,7 @@ router.get("/api/preguntas/mostrarPreguntasHabilitadas/:idcuestionarios",(req,re
   
   //Crear pregunta
   
-router.post('/api/preguntas/', (req, res) => {
+router.post('/api/preguntas/',verificacion, (req, res) => {
   
   con.query('select max(idpreguntas)+1 as idpreguntas from preguntas', (err, result) => {
     
@@ -50,7 +91,7 @@ router.post('/api/preguntas/', (req, res) => {
 
       idpreguntas: valor,
       descripcion: req.body.descripcion,
-     estado: req.body.estado,
+     estado: conv(req.body.estado),
      categoria:req.body.categoria
     };
     
@@ -58,12 +99,19 @@ router.post('/api/preguntas/', (req, res) => {
 
   con.query(sql, data,(err,result2) => {
     if (err){
-   let error="ya existe esta pregunta";
-      res.send(error);
+   const data={
+     icon:'error',
+     title:"ya existe esta pregunta"
+   }
+   console.log(err); 
+   res.send(data);
     }
     else{
-    result2.message="Se creo la pregunta con exito";
-    res.send(result2.message);
+    const data={
+      icon:'success',
+      title:"Se creo la pregunta con exito"
+    }
+    res.send(data);
     }
   });
 
@@ -72,20 +120,26 @@ router.post('/api/preguntas/', (req, res) => {
 });
 
   //Actualizar pregunta
- router.put('/api/preguntas/:idpregunta', (req, res) => {
+ router.put('/api/preguntas/:idpregunta',verificacion, (req, res) => {
     let idpregunta = req.params.idpregunta;
     let descripcion = req.body.descripcion;
-    let estado = req.body.estado;
+    let estado = conv(req.body.estado);
     let categoria=req.body.categoria;
     let sql = 'UPDATE preguntas SET descripcion= ?, estado= ?, categoria=? WHERE idpreguntas= ?';
     con.query(sql, [descripcion, estado,categoria,idpregunta], (error, results) => {
       if (error){
-        let err="Ya existe esta pregunta";
-        res.send(err);
+        const data={
+          icon:'error',
+          title:"Ya existe esta pregunta"
+        } 
+               res.send(data);
       }
         else{
-          results.message="Se edito la pregunta con exito";
-          res.send(results.message);
+          const data={
+            icon:'success',
+            title:"Se edito la pregunta con exito"
+          }
+          res.send(data);
         }
       
     });
@@ -95,7 +149,7 @@ router.post('/api/preguntas/', (req, res) => {
 
   
   //Eliminar pregunta
-  router.delete('/api/preguntas/:idpregunta', (req,res)=>{
+  router.delete('/api/preguntas/:idpregunta',verificacion, (req,res)=>{
       let idpreguntas= req.params.idpregunta;
   
       con.query('DELETE FROM preguntas WHERE idpreguntas= ?',[idpreguntas], (error,results)=>{
@@ -104,14 +158,20 @@ router.post('/api/preguntas/', (req, res) => {
             //por ende se deshabilita la pregunta
             con.query('update preguntas  SET estado=? where idpreguntas=?',["Deshabilitado",idpreguntas],(err,resultado)=>{
               if(err)throw err;
-              resultado.message="La pregunta esta asignada a algún cuestionario, se deshabilitará";
-              res.send(resultado.message);
+              const data={
+                icon:'error',
+                title:"La pregunta esta asignada a algún cuestionario, se deshabilitará"
+              }
+              res.send(data);
               
             });
           } 
           else{
-            results.message="La pregunta se elimino";
-            res.send(results.message);
+            const data={
+              icon:'success',
+              title:"La pregunta se elimino"
+            }
+            res.send(data);
           }
                
       });
