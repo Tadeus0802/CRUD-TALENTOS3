@@ -40,7 +40,7 @@ router.get("/",verificacion,(req,res)=>res.send("<h1>Ruta Inicial</h1>"));
 
   //mostrar preguntas de un cuestionario
 
-  router.get('/api/cuestionarios/preguntas/:idcuestionario',(req,res)=>{
+  router.get('/api/cuestionarios/preguntas/:idcuestionario',verificacion,(req,res)=>{
     con.query(`SELECT * FROM enlaces pc INNER JOIN preguntas p ON pc.idpreguntas=p.idpreguntas WHERE pc.idcuestionarios=?`,[req.params.idcuestionario],(err,filas)=>{
         if(err)throw err;
         res.send(filas);

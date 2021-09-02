@@ -5,25 +5,7 @@ const jwt=require('jsonwebtoken');
 require('dotenv').config({path:'../env/.env'});
 const router=Router();
 const express=require('express');
-/*
-const app=express();
-const session=require('express-session');
-const MySQLStorage=require('express-mysql-session');
-const options={
-    host:'localhost',
-    port:3306,
-    user:'root',
-    password:'',
-    database:'ct'
-}
-const sessionStore=new MySQLStorage(options);
-app.use(session({
-    key:'cookie_usuario',
-    secret:'adAfdFR3SGW4TGEF',
-    store:sessionStore,
-    resave:false,
-    saveUninitialized:false
-}))*/
+
 router.get('/',(req,res)=>res.send('Pagina principal'));
 
 //REGISTER
@@ -93,6 +75,7 @@ router.post('/api/login/',async (req,res)=>{
         else{
           // req.session.usuario=req.body.user;
             //req.session.visitas=req.session.visitas ? ++req.session.visitas : 1;
+            process.env.KEY==jwt.sign({check:true},process.env.KEY,{expiresIn:'30m'})?console.log('El token y la key son iguales'):console.log('El token y la key son distintos')
             const datas={    
                 icon:'success',
                 title:'SESSION INICIADA',
@@ -102,11 +85,14 @@ router.post('/api/login/',async (req,res)=>{
                 user:user,
                 idUser:result[0].idUser,
                 success:true,
-                token:jwt.sign({check:true},process.env.KEY,{expiresIn:'7d'})
+                token:jwt.sign({check:true},process.env.KEY,{expiresIn:'30m'})
             };
             res.send(datas);
         }
     });
 });
 
+router.post('/loginG',(req,res)=>{
+
+})
 module.exports=router;

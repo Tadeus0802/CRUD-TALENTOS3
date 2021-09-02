@@ -85,10 +85,12 @@ $(document).ready(function () {
                     body:JSON.stringify({idcuestionarios:idcuestionarios})
                 })
                 .then(response=>response.json())
-                .then(data=>Swal.fire({icon:data.icon,title:data.title}).then(()=>{
-		tablaCuestionarios.ajax.reload(null,false)
-		tablaPreguntas.ajax.reload(null,false)
-}))
+                .then(data=>{
+                    Swal.fire(data)
+                    tablaCuestionarios.ajax.reload(null,false)
+                 //   tablaPreguntas.ajax.reload(null,false)
+                })
+                .catch(err=>console.log(err))
             }
         })
     });
@@ -114,11 +116,12 @@ $(document).ready(function () {
                         'authorization':token
                     }   
                 })
-                .then(response=>Swal.fire('¡Pregunta Desasignada!', '', 'success').then(()=>{
-		tablaCuestionarios.ajax.reload(null,false)
-		tablaPreguntas.ajax.reload(null,false)
-}))
-               
+                .then(response=>{
+                    Swal.fire('¡Pregunta Desasignada!', '', 'success')
+                    tablaCuestionarios.ajax.reload(null,false)
+                    tablaPreguntas.ajax.reload(null,false)
+                })
+               .catch(err=>console.log(err))
             }
         })
     });

@@ -34,9 +34,19 @@
             },
             
         });
-        
-        
-    
+      /*
+        fetch(url,{
+            method:'get',
+            mode:'cors',
+            headers:{
+                'Content-Type':'application/json',
+                'authorization':token
+            }
+        })
+        .then(response=>response.json())
+        .then(data=>data.map(row=>tablaCuestionarios.row.add([row.idcuestionarios,row.fechaCreacion,row.usuarioCreador,row.descripcion,row.estado,"<div class='text-center'> <div class='btn-group'> <a href='preguntascuestionario.html'><button  class='btn btn-secondary btn-sm btnVer'>Ver</button></a> <button class='btns btn btn-info btn-sm btnEditar'>Editar</button> <button class='btn btn-danger btn-sm btnBorrar'>Borrar</button><button class='btn btn-info btn-sm btnClonar'>Clonar</button> </div></div>"]).draw()))
+        .catch(err=>console.log(err))
+    */
         //CREAR
         $("#btnCrear").click(function(){
             opcion='crear';            

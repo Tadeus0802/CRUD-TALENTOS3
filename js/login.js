@@ -11,7 +11,7 @@ if(login){
         firebase.auth()
         .signInWithPopup(provider)
         .then(result=>{
-              // console.log(result.user);
+               console.log(result.user);
            // console.log(result.user.displayName);
            var nombre=result.user.displayName;
            sessionStorage.setItem("usuario",nombre);
@@ -32,7 +32,10 @@ if(logout){
                 confirmButtonText: `Confirmar`,
             }).then((result) => {
                 if (result.isConfirmed) {
-                    sessionStorage.setItem('usuario',null)
+                    //el usuario se elimina
+                    sessionStorage.setItem('usuario',null);
+                    //el token se elimina
+                    sessionStorage.setItem('token',null);
                    window.location.replace('../index.html')
                 };  
             })
