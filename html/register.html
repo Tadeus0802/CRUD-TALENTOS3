@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrarse</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, red, blue);
+    }
+
+     .container #login-row #login-columns #login-box {
+      margin-top: 70px;
+      max-width: 600px;
+      height: 300px;
+      box-shadow: 5px 5px 5px black;
+      border-radius: 5px;
+    }
+    input{
+        display:block;
+        position:relative;
+        left:8vw;
+    }
+    select{
+        position:relative;
+        left:8vw;
+    }
+  </style>
+    <link rel="shortcut icon" type="image/png" href="html/favicon.png"/>
+</head>
+<body>
+    <div class="container">
+        <div id="login-row" class="row justify-content-center align-items-center">
+          <div id="login-columns" class="col-md-6">
+            <div id="login-box" class="col-md-12 bg-light text-dark p-5">
+            
+              <div id="root">
+                  <div></div>
+                 
+                  <h1 id="form-text" class="text-center display-4">Registrarse</h1>
+                    <form id="register">
+                        <input type="text" id="user" placeholder="Usuario" required>
+                        <input type="password" id="password" placeholder="Contraseña" required>
+                        <input type="text" id="fullName" placeholder="Nombre completo" required>
+                        <select id="rol">
+                                <option value="user" selected>Usuario</option>
+                                <option value="admin">Administrador</option>
+                        </select>
+                        <input type="submit" value="Crear usuario">
+                        <a href="../index.html">Cancelar</a>
+                    </form> 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../js/register.js"></script>
+</body>
+</html>

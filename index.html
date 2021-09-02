@@ -28,6 +28,13 @@
     #login {
       margin-top: 40px;
     }
+    #botones{
+      display:inline-block;
+    }
+    #botones #registrarse{
+      position:relative;
+      top:-10px;
+    }
   </style>
   <link rel="shortcut icon" type="image/png" href="html/favicon.png"/>
 </head>
@@ -37,13 +44,19 @@
     <div id="login-row" class="row justify-content-center align-items-center">
       <div id="login-columns" class="col-md-6">
         <div id="login-box" class="col-md-12 bg-light text-dark p-5">
+        
           <div id="root">
               <div></div>
+             
               <h1 id="form-text" class="text-center display-4">Iniciar sesion</h1>
-              <div class="form-group text-center">
-                <button id="login" class="btn btn-primary">
-                  <i class="fab fa-google"> Iniciar sesion con Google</i>
-                </button>
+              <form id="send">
+                <input type="text" id="user" placeholder="Usuario" required>
+                <input type="password" id="password" placeholder="Contraseña" required>
+                <input type="submit" value="Iniciar Seccion">
+            </form>
+              <div class="form-group text-center" id="botones">
+                <button id="login" class="btn btn-primary fab fa-google"> Iniciar sesion con Google</button>
+                <a  class="btn btn-primary" href="./html/register.html">Registrarse</a>
               </div>
             
           </div>
@@ -51,9 +64,7 @@
       </div>
     </div>
   </div>
-
-  <script src="https://code.jquery.com/jquery-3.2.1.min.js"
-    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-auth.js"></script>
   <script>

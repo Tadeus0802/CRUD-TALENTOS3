@@ -1,12 +1,58 @@
 const express=require('express');
 const router=express.Router();
 const con=require('../conection/connection');
+
+
+require('dotenv').config({path:'../env/.env'});
+const jwt=require('jsonwebtoken');
+const verificacion=express.Router();
+
+
+verificacion.use((req,res,next)=>{
+    let token=req.headers['x-access-token']||req.headers['authorization'];
+    //  console.log(token);  
+    
+    if(!token){
+            res.status(401).send({
+                error:'Es necesario un token de autentificacion'
+            })
+            return
+        }
+        if(token.startsWith('Bearer ')){
+                token=token.slice(7,token.length);
+                console.log(token);
+        }
+        if(token){
+            jwt.verify(token,process.env.KEY,(err,decoded)=>{
+                if(err){
+                    return res.json({
+                        message:'El token no es valido'
+                    })
+                }
+                else{
+                    req.decoded=decoded;
+                    next();
+                }
+    
+            })
+        }
+});
+
+
 router.get('/',(req,res)=>res.send('<h1>Ruta de inicio</h1>'));
 
-
+//convertir estado de booleano a habilitado/desabilitado
+function conv(param){
+    if(param){
+        return "Habilitado";
+    }
+    else{
+        return "Deshabilitado";
+    }
+}
 //crear un cuestionario|
 
-router.post('/api/cuestionarios/',(req,res)=>{
+router.post('/api/cuestionarios/',verificacion,(req,res)=>{
 con.query('select * from cuestionarios where descripcion=?',[req.body.descripcion],(err,result)=>{
 if(err)throw err;
 if(result[0]){
@@ -30,17 +76,20 @@ if(result[0]){
         con.query(sql,data,err=>{
             if(err){
                 console.log("ya existe este cuestionario");
+                console.log(err);
             }
         });
         //id del cuestionario original
         let idAntiguo=req.body.id;
         con.query("select * from enlaces where idcuestionarios=?",[idAntiguo],(err,result)=>{
             for(let i=0;i<result.length;i++){
-                con.query("insert into enlaces set ?",{idcuestionarios:idcuestionariosOrg,idpreguntas:result[i].idpreguntas},(err,result)=>{
-                    if(err) throw err;
+                con.query("insert into enlaces set ?",{idcuestionarios:data.idcuestionarios,idpreguntas:result[i].idpreguntas},(err,result)=>{
+                    if(err) console.log(err);
+                    console.log(result.fechaCreacion);   
                 });
             }
         });
+        
         res.send(result);
         });
     
@@ -58,7 +107,7 @@ if(result[0]){
                    idcuestionarios:result3,
             usuarioCreador:req.body.usuario,
             descripcion:req.body.descripcion,
-            estado:req.body.estado
+            estado:conv(req.body.estado)
         };
         const sql="insert into cuestionarios set ?";
         con.query(sql,data,err=>{
@@ -83,7 +132,7 @@ else{
                    idcuestionarios:result3,
             usuarioCreador:req.body.usuario,
             descripcion:req.body.descripcion,
-            estado:req.body.estado
+            estado:conv(req.body.estado)
         };
         const sql="insert into cuestionarios set ?";
         con.query(sql,data,err=>{
@@ -102,7 +151,7 @@ else{
 //mostrar todos los cuestionarios
 
 
-router.get('/api/cuestionarios/',(req,res)=>{
+router.get('/api/cuestionarios/',verificacion,(req,res)=>{
     con.query('select * from cuestionarios',(err,filas)=>{
     if(err)throw err;
     res.send(filas);
@@ -113,7 +162,7 @@ router.get('/api/cuestionarios/',(req,res)=>{
 //mostrar un cuestionario
 
 
-router.get('/api/cuestionarios/:id',(req,res)=>{
+router.get('/api/cuestionarios/:id',verificacion,(req,res)=>{
     con.query(`select * from cuestionarios where idcuestionarios=?`,[req.params.id],(err,fila)=>{
         if(err)throw err;
         res.send(fila);
@@ -125,13 +174,13 @@ router.get('/api/cuestionarios/:id',(req,res)=>{
 //editar un cuestionario
 
 
-router.put('/api/cuestionarios/:id',(req,res)=>{
-    let usuario=req.body.usuario;
+router.put('/api/cuestionarios/:id',verificacion,(req,res)=>{
+    
     let descripcion=req.body.descripcion;
-    let estado=req.body.estado;
+    let estado=conv(req.body.estado);
     let id=req.params.id;
-    let sql="update cuestionarios set usuarioCreador=?,descripcion=?,estado=? where idcuestionarios=?";
-    con.query(sql,[usuario,descripcion,estado,id],(err,result)=>{
+    let sql="update cuestionarios set descripcion=?,estado=? where idcuestionarios=?";
+    con.query(sql,[descripcion,estado,id],(err,result)=>{
         if(err)throw err;
         res.send(result);
 
@@ -148,15 +197,22 @@ router.delete('/api/cuestionarios/:id',(req,res)=>{
         if(err){
             //por ende se deshabilita el cuestionario
             con.query("update cuestionarios set estado=? where idcuestionarios=?",["Deshabilitado",idcuestionarios],(err2,result2)=>{
-            result2.messsage="No se elimino el cuestionario,tiene preguntas habilitadas";
-            res.send(result2.messsage);
+           const data={
+               title:"No se elimino el cuestionario,tiene preguntas habilitadas",
+               icon:'error'
+           }
+            res.send(data);
             });
         }
         else{
-            let success="Se elimino el cuestionario";
-            res.send(success);
+            const data={
+                title:"Se elimino el cuestionario",
+                icon:'success'
+            }
+            res.send(data);
         }
     });
 });
+
 
 module.exports=router;

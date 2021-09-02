@@ -1,7 +1,7 @@
 {
   "name": "api",
   "version": "1.0.0",
-  "description": "",
+  "description": "Repositorio de la API",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,6 +10,22 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-mysql-session": "^2.1.6",
+    "express-session": "^1.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "mysql": "^2.18.1",
     "nodemon": "^2.0.12"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tadeus0802/CRUD-TALENTOS3.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Tadeus0802/CRUD-TALENTOS3/issues"
+  },
+  "homepage": "https://github.com/Tadeus0802/CRUD-TALENTOS3#readme"
 }

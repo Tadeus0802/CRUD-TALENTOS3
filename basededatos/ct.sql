@@ -2,8 +2,8 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost
--- Tiempo de generación: 10-08-2021 a las 13:34:27
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 01-09-2021 a las 23:44:30
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 8.0.9
 
@@ -26,14 +26,23 @@ SET time_zone = "+00:00";
 --
 -- Estructura de tabla para la tabla `cuestionarios`
 --
-CREATE DATABASE ct;
+
 CREATE TABLE `cuestionarios` (
   `idcuestionarios` int(11) NOT NULL,
-  `fechaCreacion` varchar(50) NOT NULL,
+  `fechaCreacion` timestamp NOT NULL DEFAULT current_timestamp(),
   `usuarioCreador` varchar(50) NOT NULL,
   `descripcion` varchar(255) NOT NULL,
   `estado` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `cuestionarios`
+--
+
+INSERT INTO `cuestionarios` (`idcuestionarios`, `fechaCreacion`, `usuarioCreador`, `descripcion`, `estado`) VALUES
+(1, '2021-09-01 21:39:21', 'ariel3259', 'cuestionario 1', 'Habilitado'),
+(2, '2021-09-01 21:39:22', 'ariel3259', 'cuestionario 1(Clon)', 'Habilitado'),
+(3, '2021-09-01 21:39:24', 'ariel3259', 'cuestionario 1(Clon)(Clon)', 'Habilitado');
 
 -- --------------------------------------------------------
 
@@ -64,9 +73,33 @@ CREATE TABLE `preguntas` (
 --
 
 INSERT INTO `preguntas` (`idpreguntas`, `descripcion`, `estado`, `categoria`) VALUES
-(1, '¿Cual es tu deporte favorito?', 'Habilitado', 'Deporte'),
-(2, '¿Que opinas de windows?', 'Habilitado', 'Informatica'),
-(3, '¿Cuantos km corres?', 'Habilitado', 'Deporte');
+(3, 'pregunta 3', 'Deshabilitado', 'Deporte'),
+(4, 'pregunta 4 ', 'Deshabilitado', 'Deporte'),
+(5, 'pregunta 5 ', 'Deshabilitado', 'Deporte');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `users`
+--
+
+CREATE TABLE `users` (
+  `idUser` int(11) NOT NULL,
+  `user` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `fullName` varchar(150) NOT NULL,
+  `rol` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `users`
+--
+
+INSERT INTO `users` (`idUser`, `user`, `password`, `fullName`, `rol`) VALUES
+(1, 'ariel3', '$2a$08$mwG7OxhxAkXTZr.67TODUeTYJhXgBDLDCBudY4.yyxVaxRNN7hYFe', ' ezequiel santangelo', 'user'),
+(2, 'ariel3259', '$2a$08$7pyfbqI.qGjupPTwCH0J.OpFwD0EK6qExwKwLGxx3NpWDw9AjYtnC', 'Ariel Ezequiel Santangelo', 'admin'),
+(3, 'ariel33', '$2a$08$I0VQpX/87MIgKGcByH7SGOf/m4KJWq2OAm2itSovyDQ8vlAEXmTK2', 'ARIEL SANTANGELO', 'user'),
+(4, 'ezequiel9523', '$2a$08$YkmmEAc266KkSjlIx1evGehCffJjvS5HgMzc4Sl72DNaWpyB5IVsK', 'Ezequiel Santangelo', 'user');
 
 --
 -- Índices para tablas volcadas
@@ -91,6 +124,14 @@ ALTER TABLE `enlaces`
 ALTER TABLE `preguntas`
   ADD PRIMARY KEY (`idpreguntas`),
   ADD UNIQUE KEY `descripcion` (`descripcion`);
+
+--
+-- Indices de la tabla `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`idUser`),
+  ADD UNIQUE KEY `user` (`user`),
+  ADD UNIQUE KEY `fullName` (`fullName`);
 
 --
 -- Restricciones para tablas volcadas
