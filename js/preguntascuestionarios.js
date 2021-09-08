@@ -71,7 +71,7 @@ $(document).ready(function () {
         $('.btnAsignar').click(function(){
             fila = $(this).closest("tr");  
             idpreguntas = parseInt(fila.find('td:eq(0)').text()); 
-            //fila.find('td:eq(3)').html("<div class='text-center'><div class='btn-group'><button class='btn btn-success btn-sm btnAsignar'>Asignado!</button></div></div>"); 
+            fila.find('td:eq(3)').html("<div class='text-center'><div class='btn-group'><button class='btn btn-success btn-sm btnAsignar'>Asignado!</button></div></div>"); 
                 
             //asignamos la pregunta a x cuestionario
             if (opcion == 'asignar') {
@@ -88,7 +88,7 @@ $(document).ready(function () {
                 .then(data=>{
                     Swal.fire(data)
                     tablaCuestionarios.ajax.reload(null,false)
-                 //   tablaPreguntas.ajax.reload(null,false)
+                   tablaPreguntas.ajax.reload(null,false)
                 })
                 .catch(err=>console.log(err))
             }

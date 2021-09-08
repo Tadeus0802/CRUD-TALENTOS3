@@ -190,7 +190,7 @@ router.put('/api/cuestionarios/:id',verificacion,(req,res)=>{
 
 //eliminar un cuestionario
 
-router.delete('/api/cuestionarios/:id',(req,res)=>{
+router.delete('/api/cuestionarios/:id',verificacion,(req,res)=>{
     let idcuestionarios=req.params.id
     con.query('delete from cuestionarios where idcuestionarios=?',[idcuestionarios],(err,result)=>{
         //el error ocurre al eliminar un cuestionario con preguntas asignadas

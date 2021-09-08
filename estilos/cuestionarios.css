@@ -7,7 +7,6 @@
   body{
     font-family: 'Raleway', sans-serif;
   }
-
   header{
       width: 100%;
       height: auto;
@@ -65,4 +64,7 @@
      
      .nav-link{
         margin-top:9px;
+    }
+    th{
+        text-align: center;
     }
